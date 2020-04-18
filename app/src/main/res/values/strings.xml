@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Debt Tracker</string>
+    <string name="debt_help">Enter Debt</string>
+    <string name="debtor_name">Name</string>
+    <string name="debt_desc">Description</string>
+    <string name="debt_sum">Sum</string>
+</resources>
