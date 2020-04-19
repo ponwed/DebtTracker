@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private static final int ADD_NEW_DEBT_ACTIVITY_REQUEST_CODE = 0;
 
     private ArrayList<DebtCard> mDebtCards = new ArrayList<>();
 
@@ -34,17 +35,40 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                addNewDebtItem();
+                Intent intent = new Intent(v.getContext(), AddNewDebtActivity.class);
+                startActivityForResult(intent, ADD_NEW_DEBT_ACTIVITY_REQUEST_CODE);
             }
         });
 
         initDebtCards();
     }
 
-    private void addNewDebtItem()
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        Intent intent = new Intent(this, AddNewDebtActivity.class);
-        startActivity(intent);
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == ADD_NEW_DEBT_ACTIVITY_REQUEST_CODE)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                Bundle extras = data.getExtras();
+                if (extras != null)
+                {
+                    DebtCard debtCard = new DebtCard(
+                            extras.getString("name"),
+                            extras.getString("desc"),
+                            extras.getString("sum"));
+
+                    addNewDebtItem(debtCard);
+                }
+            }
+        }
+    }
+
+    private void addNewDebtItem(DebtCard debtCard)
+    {
+        mDebtCards.add(debtCard);
     }
 
     private void initDebtCards()
