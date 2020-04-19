@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     DebtCard debtCard = new DebtCard(
                             extras.getString("name"),
                             extras.getString("desc"),
-                            extras.getString("sum"));
+                            extras.getString("sum"),
+                            extras.getString("date"));
 
                     addNewDebtItem(debtCard);
                 }
@@ -76,9 +79,11 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "initDebtCards");
 
         //TODO: Change to load locally stored items
-        mDebtCards.add(new DebtCard("John Doe", "Food", "50 SEK"));
-        mDebtCards.add(new DebtCard("Jane Doe", "Wine", "70 SEK"));
-        mDebtCards.add(new DebtCard("Anders Andersson", "Painting supplies", "600 SEK"));
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        String date = dateFormat.format(new Date());
+        mDebtCards.add(new DebtCard("John Doe", "Food", "50 SEK", date));
+        mDebtCards.add(new DebtCard("Jane Doe", "Wine", "70 SEK", date));
+        mDebtCards.add(new DebtCard("Anders Andersson", "Painting supplies", "600 SEK", date));
 
         initRecyclerView();
     }

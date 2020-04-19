@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class AddNewDebtActivity extends AppCompatActivity
@@ -53,11 +57,16 @@ public class AddNewDebtActivity extends AppCompatActivity
         TextInputLayout etDesc = findViewById(R.id.et_desc);
         TextInputLayout etSum = findViewById(R.id.et_sum);
 
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        String date = dateFormat.format(new Date());
+
         Bundle extras = new Bundle();
+
 
         extras.putString("name", Objects.requireNonNull(etName.getEditText()).getText().toString());
         extras.putString("desc", Objects.requireNonNull(etDesc.getEditText()).getText().toString());
         extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString());
+        extras.putString("date", date);
 
         Intent intent = new Intent();
         intent.putExtras(extras);

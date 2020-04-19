@@ -1,15 +1,17 @@
 package com.pontus.debttracker;
 
-public class DebtCard
+class DebtCard
 {
-    public String debtor;
-    public String description;
-    public String debt;
+    String debtor;
+    String description;
+    String debt;
+    String date;
 
-    public DebtCard(String debtor, String description, String debt)
+    DebtCard(String debtor, String description, String debt, String date)
     {
         this.debtor = debtor;
         this.description = description;
         this.debt = debt;
+        this.date = date;
     }
 }

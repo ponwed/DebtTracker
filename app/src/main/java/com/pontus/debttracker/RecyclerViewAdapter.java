@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
 {
     private static final String TAG = "RecyclerViewAdapter";
-    private ArrayList<DebtCard> mDebtCards = new ArrayList<>();
+    private ArrayList<DebtCard> mDebtCards;
     private Context mContext;
 
     public RecyclerViewAdapter(ArrayList<DebtCard> mDebtCards, Context mContext)
@@ -43,6 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.debtor.setText(mDebtCards.get(position).debtor);
         holder.description.setText(mDebtCards.get(position).description);
         holder.debt.setText(mDebtCards.get(position).debt);
+        holder.date.setText(mDebtCards.get(position).date);
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener()
         {
@@ -66,6 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView debtor;
         TextView description;
         TextView debt;
+        TextView date;
         RelativeLayout parentLayout;
 
         public ViewHolder(@NonNull View itemView)
@@ -74,6 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             debtor = itemView.findViewById(R.id.debtor);
             description = itemView.findViewById(R.id.desc);
             debt = itemView.findViewById(R.id.debt);
+            date = itemView.findViewById(R.id.date);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
