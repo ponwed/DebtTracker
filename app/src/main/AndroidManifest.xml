@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:label="@string/main_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".AddNewDebtActivity" android:label="@string/debt_help"/>
+        <activity android:name=".AddNewDebtActivity" android:label="@string/add_new_debt_title"/>
 
     </application>
 
