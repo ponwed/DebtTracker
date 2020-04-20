@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -81,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.main_settings, menu);
+        return true;
     }
 
     private void addNewDebtItem(DebtCard debtCard)
@@ -164,5 +173,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         helper.attachToRecyclerView(recyclerView);
+    }
+
+    public void onComposeAction(MenuItem mi)
+    {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }
