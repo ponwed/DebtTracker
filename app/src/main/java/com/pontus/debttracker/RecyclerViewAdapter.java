@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,16 +43,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.description.setText(mDebtCards.get(position).description);
         holder.debt.setText(mDebtCards.get(position).debt);
         holder.date.setText(mDebtCards.get(position).date);
-
-        holder.parentLayout.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Log.d(TAG,"onClick: Clicked on: " + mDebtCards.get(position).debtor);
-                Toast.makeText(mContext, mDebtCards.get(position).debtor, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
