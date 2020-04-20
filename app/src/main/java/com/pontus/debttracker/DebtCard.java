@@ -1,6 +1,8 @@
 package com.pontus.debttracker;
 
-class DebtCard
+import java.io.Serializable;
+
+class DebtCard implements Serializable
 {
     String debtor;
     String description;

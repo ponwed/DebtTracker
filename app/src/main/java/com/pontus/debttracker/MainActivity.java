@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,14 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,19 +86,53 @@ public class MainActivity extends AppCompatActivity {
     private void addNewDebtItem(DebtCard debtCard)
     {
         mDebtCards.add(debtCard);
+        saveCards();
+    }
+
+    private void loadCards()
+    {
+        File file = new  File(this.getFilesDir(), "debtCardsFile");
+
+        try
+        {
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            //noinspection unchecked
+            mDebtCards = (ArrayList<DebtCard>) ois.readObject();
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void saveCards()
+    {
+        File file = new File(this.getFilesDir(), "debtCardsFile");
+        try
+        {
+                boolean created = file.createNewFile();
+                if(file.setWritable(true))
+                {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(mDebtCards);
+                    oos.close();
+                    fos.close();
+                }
+                else {throw new IOException("Couldn't set writeable attribute on file");}
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     private void initDebtCards()
     {
         Log.d(TAG, "initDebtCards");
-
-        //TODO: Change to load locally stored items
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        String date = dateFormat.format(new Date());
-        mDebtCards.add(new DebtCard("John Doe", "Food", "50 SEK", date));
-        mDebtCards.add(new DebtCard("Jane Doe", "Wine", "70 SEK", date));
-        mDebtCards.add(new DebtCard("Anders Andersson", "Painting supplies", "600 SEK", date));
-
+        loadCards();
         initRecyclerView();
     }
 
@@ -116,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 mDebtCards.remove(viewHolder.getAdapterPosition());
                 adapter.notifyDataSetChanged();
+                saveCards();
             }
         });
 
