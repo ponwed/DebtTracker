@@ -1,5 +1,6 @@
 package com.pontus.debttracker;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -104,27 +105,75 @@ public class AddNewDebtActivity extends AppCompatActivity
         currencySpinner.setSelection(adapter.getPosition(getCurrencyStringForLocale()));
     }
 
+    boolean verifyFields()
+    {
+        TextInputLayout etName = findViewById(R.id.et_Name);
+        TextInputLayout etDesc = findViewById(R.id.et_desc);
+        TextInputLayout etSum = findViewById(R.id.et_sum);
+
+        String name = Objects.requireNonNull(etName.getEditText()).getText().toString();
+        String desc = Objects.requireNonNull(etDesc.getEditText()).getText().toString();
+        String sum = Objects.requireNonNull(etSum.getEditText()).getText().toString();
+
+        boolean checkPassed = true;
+
+        if(name.equals(""))
+        {
+            showAlert("Missing required data", "Please provide a name");
+            checkPassed = false;
+        }
+        if (desc.equals(""))
+        {
+            showAlert("Missing required data", "Please provide an description");
+            checkPassed = false;
+        }
+        if (sum.equals(""))
+        {
+            showAlert("Missing required data", "Please provide the sum owed");
+            checkPassed = false;
+        }
+        if(!sum.matches("^[0-9]*$"))
+        {
+            showAlert("Invalid data", "Only numbers are allowed in the sum field");
+            checkPassed = false;
+        }
+
+        return checkPassed;
+    }
+
+    private void showAlert(String title, String message)
+    {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setNeutralButton(android.R.string.ok, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     public void onComposeAction(MenuItem mi)
     {
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        String date = dateFormat.format(new Date());
+
         TextInputLayout etName = findViewById(R.id.et_Name);
         TextInputLayout etDesc = findViewById(R.id.et_desc);
         TextInputLayout etSum = findViewById(R.id.et_sum);
         Spinner currencySpinner = findViewById(R.id.currency_spinner);
 
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        String date = dateFormat.format(new Date());
+        if(verifyFields())
+        {
+            Bundle extras = new Bundle();
+            extras.putString("name", Objects.requireNonNull(etName.getEditText()).getText().toString());
+            extras.putString("desc", Objects.requireNonNull(etDesc.getEditText()).getText().toString());
+            extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString() + " " + currencySpinner.getSelectedItem().toString());
+            extras.putString("date", date);
 
-        Bundle extras = new Bundle();
-
-        extras.putString("name", Objects.requireNonNull(etName.getEditText()).getText().toString());
-        extras.putString("desc", Objects.requireNonNull(etDesc.getEditText()).getText().toString());
-        extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString() + " " + currencySpinner.getSelectedItem().toString());
-        extras.putString("date", date);
-
-        Intent intent = new Intent();
-        intent.putExtras(extras);
-        setResult(RESULT_OK, intent);
-        finish();
+            Intent intent = new Intent();
+            intent.putExtras(extras);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
 }
