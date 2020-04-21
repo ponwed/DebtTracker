@@ -3,8 +3,10 @@ package com.pontus.debttracker;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
+import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
+
 public class AddNewDebtActivity extends AppCompatActivity
 {
     @Override
@@ -43,8 +47,6 @@ public class AddNewDebtActivity extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-        populateSpinner();
     }
 
     @Override
@@ -61,48 +63,10 @@ public class AddNewDebtActivity extends AppCompatActivity
         return true;
     }
 
-    // Modified function from https://stackoverflow.com/a/3537085/2195880
-    private static List<String> getAllCurrencyCodes()
-    {
-        Set<String> toret = new HashSet<String>();
-        Locale[] locs = Locale.getAvailableLocales();
-
-        for(Locale loc : locs) {
-            try {
-                Currency currency = Currency.getInstance( loc );
-
-                if ( currency != null ) {
-                    toret.add(currency.getCurrencyCode());
-                }
-            } catch(Exception exc)
-            {
-                // Locale not found
-            }
-        }
-
-        List <String> currencyList = new ArrayList<>(toret);
-        Collections.sort(currencyList);
-        return currencyList;
-    }
-
     private String getCurrencyStringForLocale()
     {
         Locale defaultLocale = Locale.getDefault();
         return Currency.getInstance(defaultLocale).getCurrencyCode();
-    }
-
-    private void populateSpinner()
-    {
-        List<String> spinnerArr = getAllCurrencyCodes();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_dropdown_item, spinnerArr
-        );
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner currencySpinner = findViewById(R.id.currency_spinner);
-        currencySpinner.setAdapter(adapter);
-        currencySpinner.setSelection(adapter.getPosition(getCurrencyStringForLocale()));
     }
 
     boolean verifyFields()
@@ -159,14 +123,16 @@ public class AddNewDebtActivity extends AppCompatActivity
         TextInputLayout etName = findViewById(R.id.et_Name);
         TextInputLayout etDesc = findViewById(R.id.et_desc);
         TextInputLayout etSum = findViewById(R.id.et_sum);
-        Spinner currencySpinner = findViewById(R.id.currency_spinner);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String currency = sharedPreferences.getString("currencies", "");
 
         if(verifyFields())
         {
             Bundle extras = new Bundle();
             extras.putString("name", Objects.requireNonNull(etName.getEditText()).getText().toString());
             extras.putString("desc", Objects.requireNonNull(etDesc.getEditText()).getText().toString());
-            extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString() + " " + currencySpinner.getSelectedItem().toString());
+            extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString() + " " + currency);
             extras.putString("date", date);
 
             Intent intent = new Intent();
