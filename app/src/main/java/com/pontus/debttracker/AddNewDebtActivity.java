@@ -47,6 +47,9 @@ public class AddNewDebtActivity extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        TextInputLayout etSum = findViewById(R.id.et_sum);
+        etSum.setHint(getResources().getString(R.string.debt_sum) + " " + getCurrency());
     }
 
     @Override
@@ -115,6 +118,12 @@ public class AddNewDebtActivity extends AppCompatActivity
                 .show();
     }
 
+    private String getCurrency()
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPreferences.getString("currencies", "");
+    }
+
     public void onComposeAction(MenuItem mi)
     {
         DateFormat dateFormat = DateFormat.getDateInstance();
@@ -124,15 +133,12 @@ public class AddNewDebtActivity extends AppCompatActivity
         TextInputLayout etDesc = findViewById(R.id.et_desc);
         TextInputLayout etSum = findViewById(R.id.et_sum);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String currency = sharedPreferences.getString("currencies", "");
-
         if(verifyFields())
         {
             Bundle extras = new Bundle();
             extras.putString("name", Objects.requireNonNull(etName.getEditText()).getText().toString());
             extras.putString("desc", Objects.requireNonNull(etDesc.getEditText()).getText().toString());
-            extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString() + " " + currency);
+            extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString() + " " + getCurrency());
             extras.putString("date", date);
 
             Intent intent = new Intent();

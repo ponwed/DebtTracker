@@ -4,7 +4,7 @@
     <string name="main_title">Debts</string>
     <string name="debtor_name">Name</string>
     <string name="debt_desc">Description</string>
-    <string name="debt_sum">Sum</string>
+    <string name="debt_sum">Debt in</string>
     <string name="create_title">Create</string>
     <string name="settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
