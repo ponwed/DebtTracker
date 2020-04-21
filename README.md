@@ -1,7 +1,3 @@
-# DebtTracker
-Debt tracker app for Android
-
-TODO:
-- Add sum of debts (maybe)
-- Add ability to switch between owe to and owed from
-- Design
+# Debt Tracker
+Simple debt tracker app for Android, intended for personal use only.
+Created partly since i just wanted and debt tracker app without a bunch of extra features.
