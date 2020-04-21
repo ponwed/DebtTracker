@@ -9,6 +9,9 @@
     <string name="debt_desc">Description</string>
     <string name="debt_sum">Debt in</string>
     <string name="create_title">Create</string>
+    <string name="person_owes_me">This person owes me</string>
+    <string name="im_owed">I\'m owed</string>
+    <string name="i_owe">I owe</string>
 
     <!-- SettingsActivity -->
     <string name="settings">Settings</string>

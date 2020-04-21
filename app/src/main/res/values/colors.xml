@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#141414</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="cardColor">#424242</color>
+    <color name="myDebt">#e53935</color>
+    <color name="yourDebt">#689f38</color>
 </resources>

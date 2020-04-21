@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -132,6 +133,7 @@ public class AddNewDebtActivity extends AppCompatActivity
         TextInputLayout etName = findViewById(R.id.et_Name);
         TextInputLayout etDesc = findViewById(R.id.et_desc);
         TextInputLayout etSum = findViewById(R.id.et_sum);
+        Switch sw = findViewById(R.id.owe_switch);
 
         if(verifyFields())
         {
@@ -140,6 +142,7 @@ public class AddNewDebtActivity extends AppCompatActivity
             extras.putString("desc", Objects.requireNonNull(etDesc.getEditText()).getText().toString());
             extras.putString("sum", Objects.requireNonNull(etSum.getEditText()).getText().toString() + " " + getCurrency());
             extras.putString("date", date);
+            extras.putBoolean("owed", sw.isChecked());
 
             Intent intent = new Intent();
             intent.putExtras(extras);

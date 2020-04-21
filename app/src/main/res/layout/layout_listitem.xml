@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/debt"
         android:text=""
+        android:textColor="@color/yourDebt"
         android:layout_below="@id/desc"
         android:textSize="15sp"
         />
@@ -40,5 +41,14 @@
         android:text=""
         android:id="@+id/date"
         android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/owed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="15sp"/>
+
 
 </RelativeLayout>

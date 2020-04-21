@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -30,8 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -43,6 +43,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.description.setText(mDebtCards.get(position).description);
         holder.debt.setText(mDebtCards.get(position).debt);
         holder.date.setText(mDebtCards.get(position).date);
+
+        // Setting text and debt color depending on which direction the debt is
+        if (mDebtCards.get(position).owed)
+        {
+            holder.owed.setText(mContext.getResources().getString(R.string.im_owed));
+            holder.debt.setTextColor(ContextCompat.getColor(mContext, R.color.yourDebt));
+        }
+        else
+        {
+            holder.owed.setText(mContext.getResources().getString(R.string.i_owe));
+            holder.debt.setTextColor(ContextCompat.getColor(mContext, R.color.myDebt));
+        }
     }
 
     @Override
@@ -57,6 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView description;
         TextView debt;
         TextView date;
+        TextView owed;
         RelativeLayout parentLayout;
 
         public ViewHolder(@NonNull View itemView)
@@ -66,6 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             description = itemView.findViewById(R.id.desc);
             debt = itemView.findViewById(R.id.debt);
             date = itemView.findViewById(R.id.date);
+            owed = itemView.findViewById(R.id.owed);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }

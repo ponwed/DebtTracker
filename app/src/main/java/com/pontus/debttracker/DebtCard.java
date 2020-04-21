@@ -8,12 +8,14 @@ class DebtCard implements Serializable
     String description;
     String debt;
     String date;
+    boolean owed;
 
-    DebtCard(String debtor, String description, String debt, String date)
+    DebtCard(String debtor, String description, String debt, String date, boolean owed)
     {
         this.debtor = debtor;
         this.description = description;
         this.debt = debt;
         this.date = date;
+        this.owed = owed;
     }
 }

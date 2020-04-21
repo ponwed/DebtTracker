@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
                             extras.getString("name"),
                             extras.getString("desc"),
                             extras.getString("sum"),
-                            extras.getString("date"));
+                            extras.getString("date"),
+                            extras.getBoolean("owed"));
 
                     addNewDebtItem(debtCard);
                 }
